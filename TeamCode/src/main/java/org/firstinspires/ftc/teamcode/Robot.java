@@ -23,7 +23,14 @@ public class Robot {
     public DcMotorEx backLeft;
     public DcMotorEx backRight;
 
+    public Robot() {
+    }
+
     public Robot(HardwareMap hardwareMap) {
+        init(hardwareMap);
+    }
+
+    public void init(HardwareMap hardwareMap) {
         frontLeft  = hardwareMap.get(DcMotorEx.class, "leftfront");
         frontRight = hardwareMap.get(DcMotorEx.class, "rightfront");
         backLeft   = hardwareMap.get(DcMotorEx.class, "leftback");
@@ -38,6 +45,32 @@ public class Robot {
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    public void stopMotors() {
+        if (frontLeft != null) frontLeft.setPower(0);
+        if (frontRight != null) frontRight.setPower(0);
+        if (backLeft != null) backLeft.setPower(0);
+        if (backRight != null) backRight.setPower(0);
+    }
+
+    public void stopAndResetEncoderMode() {
+        if (frontLeft != null) {
+            frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        if (frontRight != null) {
+            frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        if (backLeft != null) {
+            backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        if (backRight != null) {
+            backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
 
     public void driveMecanum(double axial, double lateral, double yaw) {
